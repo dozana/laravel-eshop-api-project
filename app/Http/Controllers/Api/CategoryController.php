@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        return Category::all();
+        // return Category::all();
+        // $categories = Category::select('id', 'name', 'created_at')->get();
+        $categories = Category::all();
+        return CategoryResource::collection($categories);
+    }
+
+    public function show(Category $category)
+    {
+        return new CategoryResource($category);
     }
 }
