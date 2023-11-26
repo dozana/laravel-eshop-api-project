@@ -13,7 +13,16 @@ class ProductController extends Controller
     {
         $products = Product::with('category')->get();
 
-        return ProductResource::collection($products);
+        return response()->json(['products' => ProductResource::collection($products)]);
+
+        //return ProductResource::collection($products);
         //return $products;
+    }
+
+    public function getProductsByCategory($category_id)
+    {
+        $products = Product::where('category_id', $category_id)->with('category')->get();
+
+        return response()->json(['products' => ProductResource::collection($products)]);
     }
 }

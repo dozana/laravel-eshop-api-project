@@ -12,8 +12,10 @@ class CategoryController extends Controller
     {
         // return Category::all();
         // $categories = Category::select('id', 'name', 'created_at')->get();
+        // return CategoryResource::collection($categories);
+
         $categories = Category::all();
-        return CategoryResource::collection($categories);
+        return response()->json(['categories' => CategoryResource::collection($categories)]);
     }
 
     public function show(Category $category)
