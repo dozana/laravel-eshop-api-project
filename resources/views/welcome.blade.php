@@ -34,6 +34,7 @@
         <div class="col-lg-3 col-md-3"><ul class="list-group" id="categories-list"></ul></div>
         <div class="col-lg-9 col-md-9">
             <div class="row" id="products-container"></div>
+            <div id="pagination-container" class="mt-3"></div>
         </div>
     </div>
 </div>
