@@ -17,12 +17,20 @@ class CategoryController extends Controller
         // $categories = Category::select('id', 'name', 'created_at')->get();
         // return CategoryResource::collection($categories);
 
+        if(!auth()->user()->tokenCan('categories-list')) {
+            abort(403, 'Unauthorized');
+        }
+
         $categories = Category::all();
         return response()->json(['categories' => CategoryResource::collection($categories)]);
     }
 
     public function show(Category $category)
     {
+        if(!auth()->user()->tokenCan('categories-show')) {
+            abort(403, 'Unauthorized');
+        }
+
         return new CategoryResource($category);
     }
 
