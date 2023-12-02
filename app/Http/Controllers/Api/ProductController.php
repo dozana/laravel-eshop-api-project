@@ -7,8 +7,18 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+/**
+ * @group Products
+ *
+ * Managing Products
+ */
 class ProductController extends Controller
 {
+    /**
+     * Get Products
+     *
+     * List all the products.
+     */
     public function index()
     {
         $products = Product::with('category')->paginate(9);

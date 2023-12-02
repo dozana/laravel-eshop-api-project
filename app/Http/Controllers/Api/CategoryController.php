@@ -9,17 +9,38 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group Categories
+ *
+ * Managing Categories
+ */
 class CategoryController extends Controller
 {
+    /**
+     * Get Categories
+     *
+     * List all the categories.
+     *
+     * @queryParam page Which page to show. Example: 12
+     *
+     * @response status=200 {
+     * "data":[{"id":1,"name":"aut","created_at":"2023-12-01T19:02:42.000000Z"},{"id":2,"name":"nesciunt","created_at":"2023-12-01T19:02:42.000000Z"},{"id":3,"name":"quis","created_at":"2023-12-01T19:02:42.000000Z"}]
+     * }
+     *
+     * @response status=404 {
+     * "message": "Not found"
+     * }
+     *
+     */
     public function index()
     {
         // return Category::all();
         // $categories = Category::select('id', 'name', 'created_at')->get();
         // return CategoryResource::collection($categories);
 
-        if(!auth()->user()->tokenCan('categories-list')) {
-            abort(403, 'Unauthorized');
-        }
+//        if(!auth()->user()->tokenCan('categories-list')) {
+//            abort(403, 'Unauthorized');
+//        }
 
         $categories = Category::all();
         return response()->json(['categories' => CategoryResource::collection($categories)]);
@@ -27,13 +48,20 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        if(!auth()->user()->tokenCan('categories-show')) {
-            abort(403, 'Unauthorized');
-        }
+//        if(!auth()->user()->tokenCan('categories-show')) {
+//            abort(403, 'Unauthorized');
+//        }
 
         return new CategoryResource($category);
     }
 
+    /**
+     * POST Categories
+     *
+     * Create new category
+     *
+     * @bodyParam name string required Name of the category. Example: "Clothing"
+     */
     public function store(StoreCategoryRequest $request)
     {
         $data = $request->all();
