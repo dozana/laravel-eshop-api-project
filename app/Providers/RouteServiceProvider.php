@@ -29,10 +29,19 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
+            // API version 1 routes
             Route::middleware('api')
-                ->prefix('api')
+                ->prefix('api/v1')
+                ->namespace($this->namespace.'\\Api\\V1')
                 ->group(base_path('routes/api.php'));
 
+            // API version 2 routes
+            Route::middleware('api')
+                ->prefix('api/v2')
+                ->namespace($this->namespace.'\\Api\\V2')
+                ->group(base_path('routes/api_v2.php'));
+
+            // Web routes (if needed)
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
